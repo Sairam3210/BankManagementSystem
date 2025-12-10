@@ -3,9 +3,7 @@
 
 **Java 8 | Spring Boot | ReactJS | MySQL DB**
 
-The **Bank Management System** is a comprehensive web-based application designed to streamline essential banking operations for small to medium-sized financial organizations. This platform serves as a digital backbone for managing customer accounts, ensuring secure transactions, and maintaining accurate financial records.
-
-The primary goal of this project is to bridge existing gaps in electronic banking management by providing a user-friendly, fast, and efficient interface for both administrators and customers. The system simplifies complex tasks such as account registration, fund transfers, and balance inquiries into intuitive, step-by-step operations.
+The **Bank Management System** is a comprehensive web-based application designed to streamline essential banking operations , The primary goal of this project is to bridge existing gaps in electronic banking management by providing a user-friendly, fast, and efficient interface for both administrators and customers. The system simplifies complex tasks such as account registration, fund transfers, and balance inquiries into intuitive, step-by-step operations.
 
 ---
 
