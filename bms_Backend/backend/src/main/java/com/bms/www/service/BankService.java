@@ -1,0 +1,52 @@
+package com.bms.www.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bms.www.model.Account;
+import com.bms.www.repo.AccountRepository;
+
+@Service
+public class BankService {
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    // Endpoint logic for Balance Inquiry
+    public Account getAccount(String username) {
+        
+        Account account = accountRepository.findByUserUsername(username);
+        
+        if (account == null) {
+            throw new RuntimeException("Account not found for user: " + username);
+        }
+        
+        return account;
+    }
+
+    // 2. Deposit Logic
+    public Account deposit(String accNum, Double amount) {
+        Account account = accountRepository.findByAccountNumber(accNum);
+        if(account == null) {
+            throw new RuntimeException("Account not found!");
+        }
+        account.setBalance(account.getBalance() + amount);
+        return accountRepository.save(account);
+    }
+
+    // 3. Withdraw Logic
+    public Account withdraw(String accNum, Double amount, int pin) {
+        Account account = accountRepository.findByAccountNumber(accNum);
+        if(account == null) {
+            throw new RuntimeException("Account not found!");
+        }
+        if(account.getPin() != pin) {
+            throw new RuntimeException("Invalid PIN!");
+        }
+        if(account.getBalance() < amount) {
+            throw new RuntimeException("Insufficient Balance!");
+        }
+        account.setBalance(account.getBalance() - amount);
+        return accountRepository.save(account);
+    }
+}

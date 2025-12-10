@@ -1,0 +1,5 @@
+package com.bms.www.service;
+
+public class AuthService {
+
+}

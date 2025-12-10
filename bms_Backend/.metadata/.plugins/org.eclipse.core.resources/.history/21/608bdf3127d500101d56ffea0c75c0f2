@@ -1,0 +1,36 @@
+package com.bms.www.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bms.www.model.User;
+import com.bms.www.repo.UserRepository;
+
+
+@Service
+public class AuthService {
+
+	@Autowired
+    UserRepository userRepository;
+
+    // Method to handle user login
+    public boolean login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            return false;
+        }
+
+        // In a real application, you should use encrypted passwords
+        return user.getPassword().equals(password);
+    }
+    
+    // Method to handle user registration (User Onboarding)
+    public User register(User user) {
+        // Check if username already exists to avoid duplicates
+        if(userRepository.findByUsername(user.getUsername()) != null) {
+            throw new RuntimeException("Username already exists");
+        }
+        return userRepository.save(user);
+    }
+}

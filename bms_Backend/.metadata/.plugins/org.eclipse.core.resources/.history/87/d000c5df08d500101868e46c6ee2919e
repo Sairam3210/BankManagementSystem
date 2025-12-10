@@ -1,0 +1,5 @@
+package com.bms.www.repo;
+
+public interface AccountRepository {
+
+}

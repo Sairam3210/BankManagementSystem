@@ -1,0 +1,54 @@
+package com.bms.www.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bms.www.model.Account;
+import com.bms.www.model.User;
+import com.bms.www.repo.AccountRepository;
+import com.bms.www.repo.UserRepository;
+
+
+@Service
+public class AuthService {
+
+    @Autowired
+    UserRepository userRepository;
+    
+    @Autowired
+    AccountRepository accountRepository; // Inject AccountRepository
+
+    // Method to handle user login
+    public boolean login(String username, String password) {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            return false;
+        }
+        return user.getPassword().equals(password);
+    }
+    
+    // Method to handle user registration (User Onboarding)
+    public User register(User user) {
+        // 1. Check if username already exists
+        if(userRepository.findByUsername(user.getUsername()) != null) {
+            throw new RuntimeException("Username already exists");
+        }
+        
+        // 2. Save the User first (so we get the generated ID)
+        User savedUser = userRepository.save(user);
+        
+        // 3. Automatically create a Bank Account for this new user
+        Account newAccount = new Account();
+        // Generate a random account number (using time is a simple trick)
+        newAccount.setAccountNumber(String.valueOf(System.currentTimeMillis())); 
+        newAccount.setBalance(0.0); // Start with 0 balance
+        newAccount.setPin(0);       // Default PIN (User should update this later)
+        newAccount.setUser(savedUser); // LINK THE USER TO THE ACCOUNT
+        
+        // 4. Save the Account
+        accountRepository.save(newAccount);
+        
+        return savedUser;
+    }
+}

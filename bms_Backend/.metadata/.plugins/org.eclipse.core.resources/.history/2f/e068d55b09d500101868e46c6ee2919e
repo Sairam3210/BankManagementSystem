@@ -1,0 +1,47 @@
+package com.bms.www.controller;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bms.www.model.Account;
+import com.bms.www.service.BankService;
+
+@CrossOrigin(origins = "http://localhost:5173")
+@RestController
+@RequestMapping("/api/bank")
+public class BankController {
+
+    @Autowired
+    BankService bankService;
+
+    // Endpoint for Balance Inquiry
+    @GetMapping("/balance/{username}")
+    public Account getAccount(@PathVariable String username) {
+        return bankService.getAccount(username);
+    }
+
+    // Endpoint for Deposit
+    @PostMapping("/deposit")
+    public Account deposit(@RequestBody Map<String, Object> data) {
+        Long id = Long.parseLong(data.get("id").toString());
+        Double amount = Double.parseDouble(data.get("amount").toString());
+        return bankService.deposit(id, amount);
+    }
+
+    // Endpoint for Withdraw
+    @PostMapping("/withdraw")
+    public Account withdraw(@RequestBody Map<String, Object> data) {
+        Long id = Long.parseLong(data.get("id").toString());
+        Double amount = Double.parseDouble(data.get("amount").toString());
+        Integer pin = Integer.parseInt(data.get("pin").toString());
+        return bankService.withdraw(id, amount, pin);
+    }
+}

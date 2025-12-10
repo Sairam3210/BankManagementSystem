@@ -1,0 +1,30 @@
+/* src/App.css */
+
+/* 1. Make the root container take up at least 100% of the screen height */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 2. This pushes the footer to the bottom by taking up all available empty space */
+.content-wrap {
+  flex: 1;
+}
+
+/* 3. Footer Styling (Simple and clean, no absolute positioning) */
+.footer {
+  position: absolute;
+  background-color: #294c6f; /* Matches your Dark Navbar */
+  bottom: 0;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  margin-bottom: auto; /* Extra safety to push it down */
+}
+.app-container
+{
+  height:100vh;
+  background: linear-gradient(rgb(36, 104, 34),rgb(225, 232, 101));
+}

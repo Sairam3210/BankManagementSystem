@@ -1,0 +1,41 @@
+package com.bms.www.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bms.www.model.Account;
+import com.bms.www.repo.AccountRepository;
+
+@Service
+public class BankService {
+
+    @Autowired
+    AccountRepository accountRepository;
+
+    // 1. Balance Enquiry
+    public Account getAccount(String username) {
+        return accountRepository.findByUserUsername(username);
+    }
+
+    // 2. Deposit Logic
+    public Account deposit(Long accountId, double amount) {
+        Account account = accountRepository.findById(accountId).orElseThrow();
+        account.setBalance(account.getBalance() + amount);
+        return accountRepository.save(account);
+    }
+
+    // 3. Withdraw Logic
+    public Account withdraw(Long accountId, double amount, int pin) {
+        Account account = accountRepository.findById(accountId).orElseThrow();
+        
+        if(account.getPin() != pin) {
+            throw new RuntimeException("Invalid PIN");
+        }
+        if(account.getBalance() < amount) {
+            throw new RuntimeException("Insufficient Balance");
+        }
+        
+        account.setBalance(account.getBalance() - amount);
+        return accountRepository.save(account);
+    }
+}

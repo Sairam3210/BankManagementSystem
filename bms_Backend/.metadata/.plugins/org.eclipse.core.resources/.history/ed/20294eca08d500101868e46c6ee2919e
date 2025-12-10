@@ -1,0 +1,5 @@
+package com.bms.www.model;
+
+public class Account {
+
+}

@@ -1,0 +1,12 @@
+package com.bms.www.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bms.www.model.Account;
+
+@Repository
+public interface AccountRepository extends JpaRepository<Account, Long> {
+    // This helps us find the account when the user logs in
+    Account findByUserUsername(String username);
+}

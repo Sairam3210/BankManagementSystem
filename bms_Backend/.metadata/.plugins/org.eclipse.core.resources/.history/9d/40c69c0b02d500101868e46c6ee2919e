@@ -1,0 +1,5 @@
+package com.bms.www.controller;
+
+public class AuthController {
+
+}
