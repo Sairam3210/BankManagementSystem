@@ -25,6 +25,7 @@ The **Bank Management System** is a comprehensive web-based application designed
 * Deposit Money
 * Withdraw Money
 * Check Balance
+* Log Out
 
 ---
 
